@@ -41,12 +41,12 @@ for _ in app:
         me = app[_].get_me()
         alive += 1
         all += 1
-        print(green + f'[{acc}√] {me.first_name} - ({me.id}) started!')
+        print(green + f'[√] {acc} started! | {me.first_name} - ({me.id})')
     except Exception as exc:
         dead += 1
         all += 1
-        print(red + f'[{acc}x] cannot start...\n({exc})')
-time.sleep(2)
+        print(red + f'[X] {acc} cannot start...\n({exc})')
+time.sleep(1)
 
 # Menu
 while True:
@@ -87,10 +87,10 @@ ____        _   _   _      _
 By KittenDEV
 """)
         action = input('>> ')
-        if action in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]:
+        if action in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]:
             run = 1
         else:
-            print('[x] Unknown command!')
+            print(red + '[X] Unknown command!')
             time.sleep(1)
 
     # Accounts count changer
@@ -114,9 +114,9 @@ By KittenDEV
         for _ in app:
             try:
                 app[_].update_profile(bio=newbio)
-                print(green + f'[v]  {_} changed bio')
+                print(green + f'[√]  {_} changed bio')
             except:
-                print(red + f'[x] {_} account cannot change bio')
+                print(red + f'[X] {_} account cannot change bio')
         print(pink + f'[√] All accounts changed bio')
         input(green + '[*] Press ENTER to continue')
 
@@ -126,9 +126,9 @@ By KittenDEV
         for _ in app:
             try:
                 app[_].join_chat(group)
-                print(green + f'[v] {_} account joined to {group}')
+                print(green + f'[√] {_} account joined to {group}')
             except:
-                print(red + f'[x] {_} account cannot join to {group}')
+                print(red + f'[X] {_} account cannot join to {group}')
         print(pink + f'[√] All accounts joined to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
@@ -138,9 +138,9 @@ By KittenDEV
         for _ in app:
             try:
                 app[_].leave_chat(group)
-                print(green + f'[v] {_} account leaved from {group}')
+                print(green + f'[√] {_} account leaved from {group}')
             except:
-                print(red + f'[x] {_} account cannot leave from {group}')
+                print(red + f'[X] {_} account cannot leave from {group}')
         print(pink + f'[√] All accounts leaved from {group}')
         input(cyan + '[*] Press ENTER to continue')
 
@@ -156,10 +156,10 @@ By KittenDEV
                 try:
                    app[_].send_message(group, text)
                    sms += 1
-                   print(green + f'[v] {_} account sent {sms} message to {group}')
+                   print(green + f'[√] {_} account sent {sms} message to {group}')
                    sleep(cooldown)
                 except:
-                   print(red + f'[x] {_} account cannot send message to {group}')
+                   print(red + f'[X] {_} account cannot send message to {group}')
         print(pink + f'[√] All messages sent to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
@@ -177,10 +177,10 @@ By KittenDEV
                 try:
                      app[_].send_animation(group, gif, caption=text)
                      sms += 1
-                     print(green + f'[v] {_} account sent {sms} gif to {group}')
+                     print(green + f'[√] {_} account sent {sms} gif to {group}')
                      sleep(cooldown)
                 except:
-                        print(red + f'[x] {_} account cannot send gif to {group}')
+                        print(red + f'[X] {_} account cannot send gif to {group}')
         print(pink + f'[√] All gifs sent to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
@@ -198,10 +198,10 @@ By KittenDEV
                 try:
                      app[_].send_voice(group, voice, caption=text)
                      sms += 1
-                     print(green + f'[v] {_} account sent {sms} voice to {group}')
+                     print(green + f'[√] {_} account sent {sms} voice to {group}')
                      sleep(cooldown)
                 except:
-                        print(red + f'[x] {_} account cannot send voice to {group}')
+                        print(red + f'[X] {_} account cannot send voice to {group}')
         print(pink + f'[√] All voices sent to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
@@ -219,10 +219,10 @@ By KittenDEV
                 try:
                      app[_].send_photo(group, photo, caption=text)
                      sms += 1
-                     print(green + f'[v] {_} account sent {sms} photo to {group}')
+                     print(green + f'[√] {_} account sent {sms} photo to {group}')
                      sleep(cooldown)
                 except:
-                        print(red + f'[x] {_} account cannot send message to {group}')
+                        print(red + f'[X] {_} account cannot send message to {group}')
         print(pink + f'[√] All photos sent to {group} ')
         input(cyan + '[*] Press ENTER to continue')
 
@@ -239,10 +239,10 @@ By KittenDEV
                 try:
                      app[_].send_sticker(group, sticker)
                      sms += 1
-                     print(green + f'[v] {_} account sent {sms} sticker to {group}')
+                     print(green + f'[√] {_} account sent {sms} sticker to {group}')
                      sleep(cooldown)
                 except:
-                        print(red + f'[x] {_} account cannot send sticker to {group}')
+                        print(red + f'[X] {_} account cannot send sticker to {group}')
         print(pink + f'[√] All messages sent to {group} ')
         input(cyan + '[*] Press ENTER to continue')
 
