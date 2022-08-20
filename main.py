@@ -20,32 +20,26 @@ except ModuleNotFoundError:
     pip.main(['install', 'pyrogram'])
     import os, sys
     os.execl(sys.executable, sys.executable, *sys.argv)
-    quit()
 
 # Imports
 import os, sys, time
-from pyrogram import Client, filters
-from pyrogram.errors import FloodWait, ChatSendMediaForbidden
-from pyrogram.types import Message, ChatPermissions
-from pyrogram.handlers import MessageHandler
 from accs import sess
 
 # Clear
-os.system('cls' if os.name == 'nt' else 'clear')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 # Accounts fetch
-app = sess
-for _ in app:
+for a in sess:
     try:
-        app[_].start()
-        me = app[_].get_me()
+        sess[a].start()
+        me = sess[a].get_me()
         alive += 1
         all += 1
-        print(green + f'[√] {acc} started! | {me.first_name} - ({me.id})')
+        print(green + f'[√] {a} started! | {me.first_name} - ({me.id})')
     except Exception as exc:
         dead += 1
         all += 1
-        print(red + f'[X] {acc} cannot start...\n({exc})')
+        print(red + f'[X] {a} cannot start...\n({exc})')
 time.sleep(1)
 
 # Menu
@@ -96,36 +90,33 @@ By KittenDEV
     # Accounts count changer
     if action == '0':
         sess_new = int(input(yellow + "Number of accounts >> "))
-        accs = "from pyrogram import Client as session\nsess = {\n"
+        accs = 'from pyrogram import Client as session\napi_hash = "014b35b6184100b085b0d0572f9b5103"\nsess = {\n'
         for a in range(sess_new):
             b = a + 1
-            accs += f"{b}: session('{b}'),\n"
+            accs += f"{b}: session('{b}', 4, api_hash),\n"
         accs += "}"
-        with open("accs.py", "w") as f:
-            f.write(accs)
-            f.close()
+        open("accs.py", "w").write(accs)
         print(green + '[√] Restarting BotNet...')
         os.execl(sys.executable, sys.executable, *sys.argv)
-        quit()
 
     # Change Bio
     if action == '1':
-        newbio = input(yellow + 'New bio>> ')
-        for _ in app:
+        newbio = input(yellow + 'New bio >> ')
+        for _ in sess:
             try:
-                app[_].update_profile(bio=newbio)
+                sess[_].update_profile(newbio)
                 print(green + f'[√]  {_} changed bio')
             except:
                 print(red + f'[X] {_} account cannot change bio')
         print(pink + f'[√] All accounts changed bio')
-        input(green + '[*] Press ENTER to continue')
+        input(cyan + '[*] Press ENTER to continue')
 
     # Join to chat
     if action == '2':
-        group = input(yellow + 'Username>> ')
-        for _ in app:
+        group = input(yellow + 'Username >> ')
+        for _ in sess:
             try:
-                app[_].join_chat(group)
+                sess[_].join_chat(group)
                 print(green + f'[√] {_} account joined to {group}')
             except:
                 print(red + f'[X] {_} account cannot join to {group}')
@@ -134,10 +125,10 @@ By KittenDEV
 
     # Leave from chat
     if action == '3':
-        group = input(yellow + 'Username>> ')
-        for _ in app:
+        group = input(yellow + 'Username >> ')
+        for _ in sess:
             try:
-                app[_].leave_chat(group)
+                sess[_].leave_chat(group)
                 print(green + f'[√] {_} account leaved from {group}')
             except:
                 print(red + f'[X] {_} account cannot leave from {group}')
@@ -146,101 +137,98 @@ By KittenDEV
 
     # Flood text
     if action == '4':
-        group = input(yellow + 'Username>> ')
-        text = input(yellow + 'Text>> ')
-        msgs = int(input(yellow + 'Messages count (from every account)>> '))
-        cooldown = int(input(yellow + 'Cooldown>> '))
+        group = input(yellow + 'Username >> ')
+        text = input(yellow + 'Text >> ')
+        msgs = int(input(yellow + 'Messages count (from every account) >> '))
+        cooldown = int(input(yellow + 'Cooldown >> '))
         sms = 0
         for z in range(msgs):
-            for _ in app:
+            for _ in sess:
                 try:
-                   app[_].send_message(group, text)
-                   sms += 1
-                   print(green + f'[√] {_} account sent {sms} message to {group}')
-                   sleep(cooldown)
+                    sess[_].send_message(group, text)
+                    sms += 1
+                    print(green + f'[√] {_} account sent {sms} message to {group}')
+                    time.sleep(cooldown)
                 except:
-                   print(red + f'[X] {_} account cannot send message to {group}')
+                    print(red + f'[X] {_} account cannot send message to {group}')
         print(pink + f'[√] All messages sent to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
     # Flood gif
     if action == '5':
-        print(pink + f'You must to put gif.gif to folder with BotNet!')
-        group = input(yellow + 'Username>> ')
-        gif = "gif.gif"
-        text = input(yellow + 'Text>> ')
-        msgs = int(input(yellow + 'Messages count (from every account)>> '))
-        cooldown = int(input(yellow + 'Cooldown>> '))
+        group = input(yellow + 'Username >> ')
+        gif = input(yellow + 'Gif file name >>')
+        text = input(yellow + 'Text >> ')
+        msgs = int(input(yellow + 'Messages count (from every account) >> '))
+        cooldown = int(input(yellow + 'Cooldown >> '))
         sms = 0
         for z in range(msgs):
-            for _ in app:
-                try:
-                     app[_].send_animation(group, gif, caption=text)
-                     sms += 1
-                     print(green + f'[√] {_} account sent {sms} gif to {group}')
-                     sleep(cooldown)
+            for _ in sess:
+                try:
+                    sess[_].send_animation(group, gif, caption=text)
+                    sms += 1
+                    print(green + f'[√] {_} account sent {sms} gif to {group}')
+                    time.sleep(cooldown)
                 except:
-                        print(red + f'[X] {_} account cannot send gif to {group}')
+                    print(red + f'[X] {_} account cannot send gif to {group}')
         print(pink + f'[√] All gifs sent to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
-    # Flood gif
+    # Flood sound
     if action == '6':
-        print(pink + f'You must to put sound.mp3 to folder with BotNet!')
-        group = input(yellow + 'Username>> ')
-        voice = "sound.mp3"
-        text = input(yellow + 'Text>> ')
-        msgs = int(input(yellow + 'Voices count (from every account)>> '))
-        cooldown = int(input(yellow + 'Cooldown>> '))
+        group = input(yellow + 'Username >> ')
+        voice = input(yellow + 'Sound file name >> ')
+        text = input(yellow + 'Text >> ')
+        msgs = int(input(yellow + 'Voices count (from every account) >> '))
+        cooldown = int(input(yellow + 'Cooldown >> '))
         sms = 0
         for z in range(msgs):
-            for _ in app:
-                try:
-                     app[_].send_voice(group, voice, caption=text)
-                     sms += 1
-                     print(green + f'[√] {_} account sent {sms} voice to {group}')
-                     sleep(cooldown)
+            for _ in sess:
+                try:
+                    sess[_].send_voice(group, voice, caption=text)
+                    sms += 1
+                    print(green + f'[√] {_} account sent {sms} voice to {group}')
+                    time.sleep(cooldown)
                 except:
-                        print(red + f'[X] {_} account cannot send voice to {group}')
+                    print(red + f'[X] {_} account cannot send voice to {group}')
         print(pink + f'[√] All voices sent to {group}')
         input(cyan + '[*] Press ENTER to continue')
 
     # Flood photo
     if action == '7':
-        print(pink + f'You must to put photo.jpg to folder with BotNet!')
-        group = input(yellow + 'Username>> ')
-        photo = "photo.jpg"
-        text = input(yellow + 'Text>> ')
-        msgs = int(input(yellow + 'Photos count (from every account)>> '))
+        group = input(yellow + 'Username >> ')
+        photo = input(yellow + 'Photo file name >> ')
+        text = input(yellow + 'Text >> ')
+        msgs = int(input(yellow + 'Photos count (from every account) >> '))
         cooldown = int(input(yellow + 'Cooldown>> '))
-        sms = 0
+        sms = 0
         for z in range(msgs):
-            for _ in app:
-                try:
-                     app[_].send_photo(group, photo, caption=text)
-                     sms += 1
-                     print(green + f'[√] {_} account sent {sms} photo to {group}')
-                     sleep(cooldown)
+            for _ in sess:
+                try:
+                    sess[_].send_photo(group, photo, caption=text)
+                    sms += 1
+                    print(green + f'[√] {_} account sent {sms} photo to {group}')
+                    time.sleep(cooldown)
                 except:
-                        print(red + f'[X] {_} account cannot send message to {group}')
+                    print(red + f'[X] {_} account cannot send message to {group}')
         print(pink + f'[√] All photos sent to {group} ')
         input(cyan + '[*] Press ENTER to continue')
 
     # Flood sticker
     if action == '8':
-        group = input(yellow + 'Username>> ')
+        group = input(yellow + 'Username >> ')
         print(pink + f'To get sticker id you must to send sticker to @idstickerbot and copy id.')
-        sticker = input(yellow + 'Sticker ID>> ')
-        msgs = int(input(yellow + 'Stickers count (from every account)>> '))
-        cooldown = int(input(yellow + 'Cooldown>> '))
+        sticker = input(yellow + 'Sticker ID >> ')
+        msgs = int(input(yellow + 'Stickers count (from every account) >> '))
+        cooldown = int(input(yellow + 'Cooldown >> '))
         sms = 0
         for z in range(msgs):
-            for _ in app:
-                try:
-                     app[_].send_sticker(group, sticker)
+            for _ in sess:
+                try:
+                     sess[_].send_sticker(group, sticker)
                      sms += 1
                      print(green + f'[√] {_} account sent {sms} sticker to {group}')
-                     sleep(cooldown)
+                     time.sleep(cooldown)
                 except:
                         print(red + f'[X] {_} account cannot send sticker to {group}')
         print(pink + f'[√] All messages sent to {group} ')
@@ -262,12 +250,13 @@ ____        _   _   _      _
 |____/ \___/ \__|_| \_|\___|\__|
 
 By KittenDEV (t.me/Kitten_Dev and github.com/KittenPro)
-""")
-        input(green + '[*] Press ENTER to back menu')
+""")
+        input(yellow + '[*] Press ENTER to back menu')
+
+    # Restart
     if action == '10':
         print(green + '[√] Restarting BotNet...')
         os.execl(sys.executable, sys.executable, *sys.argv)
-        quit()
 
     # Exit
     if action == '11':
