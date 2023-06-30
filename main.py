@@ -21,7 +21,8 @@ except ModuleNotFoundError:
     import os, sys
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-# Imports
+# Imports
+
 import os, sys, time
 from accs import sess
 
@@ -158,7 +159,8 @@ By KittenDEV
     if action == '5':
         group = input(yellow + 'Username >> ')
         gif = input(yellow + 'Gif file name >>')
-        text = input(yellow + 'Text >> ')
+        text = input(yellow + 'Text >> ')
+
         msgs = int(input(yellow + 'Messages count (from every account) >> '))
         cooldown = int(input(yellow + 'Cooldown >> '))
         sms = 0
@@ -249,7 +251,7 @@ ____        _   _   _      _
 | |_) | (_) | |_| |\  |  __/ |_
 |____/ \___/ \__|_| \_|\___|\__|
 
-By KittenDEV (t.me/Kitten_Dev and github.com/KittenPro)
+By KittenDEV (t.me/dltdv1 and github.com/KittenPro)
 """)
         input(yellow + '[*] Press ENTER to back menu')
 
